@@ -53,6 +53,7 @@
     <Compile Include="Activation Functions\IActivationFunction.cs" />
     <Compile Include="Activation Functions\SigmoidFunction.cs" />
     <Compile Include="Activation Functions\ThresholdFunction.cs" />
+    <Compile Include="INetworkSerializer.cs" />
     <Compile Include="Layers\ActivationLayer.cs" />
     <Compile Include="Layers\DistanceLayer.cs" />
     <Compile Include="Layers\Layer.cs" />

@@ -156,11 +156,16 @@ namespace AForge.Neuro
         /// 
         /// <remarks><para>The neural network is saved using .NET serialization (binary formatter is used).</para></remarks>
         /// 
-        public void Save( string fileName )
+        public void Save( string fileName, INetworkSerializer networkSerializer = null)
         {
-            FileStream stream = new FileStream( fileName, FileMode.Create, FileAccess.Write, FileShare.None );
-            Save( stream );
-            stream.Dispose( );
+            if (networkSerializer != null)
+                networkSerializer.Save(this, fileName);
+            else
+            {
+                FileStream stream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None);
+                Save(stream);
+                stream.Dispose();
+            }
         }
 
         /// <summary>
@@ -187,13 +192,20 @@ namespace AForge.Neuro
         /// 
         /// <remarks><para>Neural network is loaded from file using .NET serialization (binary formater is used).</para></remarks>
         /// 
-        public static Network Load( string fileName )
+        public static Network Load( string fileName, INetworkSerializer networkSerializer = null )
         {
-            FileStream stream = new FileStream( fileName, FileMode.Open, FileAccess.Read, FileShare.Read );
-            Network network = Load( stream );
-            stream.Dispose( );
+            if (networkSerializer != null)
+            {
+                return networkSerializer.Load(fileName);
+            }
+            else
+            {
+                FileStream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read);
+                Network network = Load(stream);
+                stream.Dispose();
 
-            return network;
+                return network;
+            }
         }
 
         /// <summary>
